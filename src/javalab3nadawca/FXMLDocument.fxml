@@ -10,7 +10,9 @@
     <children>
         <Button fx:id="startButton" mnemonicParsing="false" layoutY="10.0"  onAction="#sendFileAction" prefWidth="100.0" text="Send" />                
         <Label fx:id="statusLabel" layoutY="40.0"  text="" />
+        <Label fx:id="statusLabel2" layoutY="60.0"  text="" />
         <ProgressBar fx:id="progressBar" layoutY="80.0"  prefWidth="200.0" progress="0.0" /> 
+        <ProgressBar fx:id="progressBar2" layoutY="100.0"  prefWidth="200.0" progress="0.0" /> 
         <FlowPane AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="120.0" fx:id="flowPane"  prefWidth="500" orientation="VERTICAL"/> 
     </children>  
 </AnchorPane>

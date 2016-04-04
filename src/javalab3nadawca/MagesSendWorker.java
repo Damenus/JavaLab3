@@ -5,6 +5,7 @@ import java.io.FileInputStream;
 import java.io.ObjectOutputStream;
 import java.io.OutputStream;
 import java.net.Socket;
+import javafx.application.Platform;
 import javafx.concurrent.Task;
 import javafx.scene.layout.HBox;
 
@@ -25,6 +26,14 @@ public class MagesSendWorker extends Task<Void> {
         
             Socket socket = new Socket("localhost", 9876);
             OutputStream os = socket.getOutputStream();
+            
+            doc.setnumberOfAllBytes((double)doc.getnumberOfAllBytes() + this.file.length());                      
+            Platform.runLater(new Runnable() {
+                            @Override public void run() {
+                                doc.getProgressBar2().setProgress(doc.getnumberOfSendedBytes()/doc.getnumberOfAllBytes());
+                              
+                            }
+                        });
 
             try (ObjectOutputStream fos = new ObjectOutputStream(os)) {
                 
@@ -40,7 +49,17 @@ public class MagesSendWorker extends Task<Void> {
 
                         count += dataSize;
                         updateProgress(count, file.length());
-                        updateMessage("Sending " + count + " bytes of data");               
+                        updateMessage("Sending " + count + " bytes of data");  
+                        
+                        doc.setnumberOfSendedBytes((double)doc.getnumberOfSendedBytes() + dataSize );  
+                        Platform.runLater(new Runnable() {
+                            @Override public void run() {
+                                doc.getProgressBar2().setProgress(doc.getnumberOfSendedBytes()/doc.getnumberOfAllBytes());
+                                doc.getLabel2().textProperty().setValue("Liczba bajtów " +
+                                      String.valueOf(doc.getnumberOfSendedBytes()) + " na " + String.valueOf(doc.getnumberOfAllBytes()));   
+                            }
+                        });
+                        
                         Thread.sleep(8);
                     }
 

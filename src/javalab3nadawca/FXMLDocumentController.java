@@ -21,18 +21,31 @@ public class FXMLDocumentController implements Initializable {
     private Label statusLabel;
     
     @FXML
+    private Label statusLabel2;
+    
+    @FXML
     private ProgressBar progressBar;
+    
+    @FXML
+    private ProgressBar progressBar2;
         
     @FXML
     private FlowPane  flowPane ;    
         
     private int numberOfFiles = 0;
     private Integer numberOfEndedFiles = 0;
+    private double numberOfSendedBytes = 0;
+    private double numberOfAllBytes = 0;
+    
     private ArrayList<ProgressBar> barList = new ArrayList<>();
     private ArrayList<Label> labelList = new ArrayList<>();
     
     public Label getLabel() {
         return this.statusLabel;
+    }
+    
+    public Label getLabel2() {
+        return this.statusLabel2;
     }
     
     public FlowPane getFlowPane() {
@@ -41,6 +54,22 @@ public class FXMLDocumentController implements Initializable {
     
     public int getNumberOfFiles() {
         return this.numberOfFiles;
+    }
+    
+    public void setnumberOfSendedBytes(double a) {
+        this.numberOfSendedBytes = a;
+    }
+    
+    public double getnumberOfSendedBytes() {
+        return this.numberOfSendedBytes;
+    }
+    
+    public void setnumberOfAllBytes(double a) {
+        this.numberOfAllBytes = a;
+    }
+    
+    public double getnumberOfAllBytes() {
+        return this.numberOfAllBytes;
     }
     
     public void setNumberOfFiles(int a) {
@@ -61,6 +90,14 @@ public class FXMLDocumentController implements Initializable {
     
     public void setProgressBar(double progressBar) {
         this.progressBar.setProgress(progressBar);
+    }
+    
+    public ProgressBar getProgressBar2() {
+        return this.progressBar2;
+    }
+    
+    public void setProgressBar2(double progressBar) {
+        this.progressBar2.setProgress(progressBar);
     }
     
     @FXML
@@ -114,7 +151,15 @@ public class FXMLDocumentController implements Initializable {
                         String.valueOf(numberOfEndedFiles) + " na " + String.valueOf(numberOfFiles));
 
             }
-        });                
+        });    
+        
+        statusLabel2.textProperty().addListener(new ChangeListener() {
+            @Override
+            public void changed(ObservableValue arg0, Object arg1, Object arg2) {
+                statusLabel2.textProperty().setValue("Liczba bajtów " +
+                                      String.valueOf(getnumberOfSendedBytes()) + " na " + String.valueOf(getnumberOfAllBytes())); 
+            }
+        }); 
     }   
     
 }
